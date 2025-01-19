@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "Create automated tests for https://practicesoftwaretesting.com/ using playwright, typescript and cucumber.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "cucumber-js test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.49.1",
-    "@types/node": "^22.10.7"
+    "@types/node": "^22.10.7",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "playwright": "^1.49.1"
   }
 }
