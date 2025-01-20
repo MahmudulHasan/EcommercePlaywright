@@ -13,6 +13,7 @@
     "@cucumber/cucumber": "^11.2.0",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.7",
+    "expected-condition-playwright": "^1.0.1",
     "ts-node": "^10.9.2"
   },
   "dependencies": {
