@@ -1,9 +1,10 @@
-import {Locator,Page} from '@playwright/test';
+import {expect, Locator,Page} from '@playwright/test';
 
 export class LoginPage {
     signInbutton : Locator;
     userName : Locator;
     password : Locator;
+    pageTitle: Locator;
     page : Page;
 
 constructor(page:Page)
@@ -12,7 +13,7 @@ constructor(page:Page)
     this.signInbutton= this.page.locator("[data-test='login-submit']");
     this.userName = this.page.locator("[data-test='email']");
     this.password = this.page.locator("[data-test='password']");
-
+    this.pageTitle = this.page.locator("[data-test='page-title']");
 }
 
 async goTo()
@@ -26,7 +27,7 @@ async validLogin(username:string,password:string)
      await this.password.fill(password);
      await this.signInbutton.click();
      await this.page.waitForLoadState('networkidle');
-
+     await expect(await this.pageTitle).toHaveText('My account');
 }
 
 }
