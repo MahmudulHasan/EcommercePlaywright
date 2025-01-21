@@ -7,8 +7,8 @@ Feature: Purchase a product from Ecommerce Platform
     And the user goes to the "Home" page
     And the user searches for "Thor Hammer"
     When the user goes to the "Thor Hammer" product details page
-    # And the user adds the product to the cart
-    # Then "Thor Hammer" product should be added to the cart
+    And the user adds the product to the cart
+    Then the product should be added to the cart
     # When the user proceeds to checkout
     # And the user enters the Billing Address "Mirpur", "Dhaka", "Bangladesh", "1216"
     # And the user proceeds to checkout
