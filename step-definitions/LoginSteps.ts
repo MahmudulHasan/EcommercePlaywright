@@ -1,6 +1,6 @@
 import { Given } from '@cucumber/cucumber';
-import { LoginPage } from '../../page-objects/LoginPage';
-import { pageFixture } from '../../hooks/pageFixtures';
+import { LoginPage } from '../page-objects/LoginPage';
+import { pageFixture } from '../hooks/pageFixtures';
 
 Given('the user logs in to Ecommerce application with {string} and {string}',async function(username, password) {
     const loginPage = new LoginPage(pageFixture.page);

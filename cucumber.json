@@ -1,12 +1,12 @@
 {
     "default": {
         "paths": [
-            "src/test/features"
+            "features"
         ],
         "dryRun": false,
         "require": [
-            "src/test/steps/*.ts",
-            "src/hooks/hooks.ts"
+            "step-definitions/*.ts",
+            "hooks/hooks.ts"
         ],
         "requireModule": [
             "ts-node/register"
