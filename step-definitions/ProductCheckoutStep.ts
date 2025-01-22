@@ -1,6 +1,8 @@
 import { When, Then, setDefaultTimeout } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import { pageFixture } from '../hooks/pageFixtures'
+import { pageFixture } from '../hooks/pageFixtures';
+import { CustomWorld } from '../utils/world';
+import { time } from 'console';
 
 setDefaultTimeout(60000);
 
@@ -22,6 +24,8 @@ When('the user enters the Billing Address {string}, {string}, {string}, {string}
     await addressInput.fill(address);
     const cityInput = await pageFixture.page.locator('[data-test="city"]');
     await cityInput.fill(city);
+    const stateInput = await pageFixture.page.locator('[data-test="state"]');
+    await stateInput.fill(city);
     const countryInput = await pageFixture.page.locator('[data-test="country"]');
     await countryInput.fill(country);
     const postcodeInput = await pageFixture.page.locator('[data-test="postcode"]');
@@ -41,16 +45,20 @@ When('the user selects the payment method {string} and installment plan {string}
 
 Then('the user should get a message {string}', async(paymentSuccessMessage) => {
     const successMessage = await pageFixture.page.locator('.help-block');
+    await console.log("Invoice Number: ", await successMessage.textContent());
     await expect(successMessage).toHaveText(paymentSuccessMessage);
 });
 
 When('the user clicks confirm button', async() => {
     const paymentFinishButton = await pageFixture.page.locator('[data-test="finish"]');
-    await paymentFinishButton.click();
+    await paymentFinishButton.click({timeout: 60000});
+    await paymentFinishButton.click({timeout: 60000});
 });
 
-Then('the user should get a invoice number', async() => {
+Then('the user should get a invoice number', async function(this: CustomWorld) {
     const invoiceNumber = await pageFixture.page.locator('[id="order-confirmation"] span');
     await expect(invoiceNumber).toBeVisible();
     console.log("Invoice Number: ", await invoiceNumber.textContent());
+    this.sharedData.invoiceNumber = await invoiceNumber.textContent();
+    console.log("Invoice Number: ", this.sharedData.invoiceNumber);
 });

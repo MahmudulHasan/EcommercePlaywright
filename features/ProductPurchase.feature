@@ -13,8 +13,8 @@ Feature: Purchase a product from Ecommerce Platform
     And the user enters the Billing Address "Mirpur", "Dhaka", "Bangladesh", "1216"
     And the user selects the payment method "Buy Now Pay Later" and installment plan "3 Monthly Installments"
     Then the user should get a message "Payment was successful"
-    When the user clicks "Confirm" button
-    # Then the user should get a invoice number
+    When the user clicks confirm button
+    Then the user should get a invoice number
     # When the user goes to "My invoices" page
     # Then the user should see the invoice number in the list
 
