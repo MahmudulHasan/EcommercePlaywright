@@ -3,7 +3,7 @@ Feature: Purchase a product from Ecommerce Platform
 
   @regression  
   Scenario: Purchase a product
-    Given the user logs in to Ecommerce application with "customer@practicesoftwaretesting.com" and "welcome01"
+    Given the user logs in to Ecommerce application with "customer2@practicesoftwaretesting.com" and "welcome01"
     And the user goes to the "Home" page
     And the user searches for "Thor Hammer"
     When the user goes to the "Thor Hammer" product details page

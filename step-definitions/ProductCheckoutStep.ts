@@ -4,6 +4,7 @@ import { pageFixture } from '../hooks/pageFixtures';
 import { CustomWorld } from '../utils/world';
 import { time } from 'console';
 
+
 setDefaultTimeout(60000);
 
 When('the user proceeds to checkout for the product {string}', async (productName) => {
@@ -13,7 +14,7 @@ When('the user proceeds to checkout for the product {string}', async (productNam
     await expect(cartItem).toHaveText("Thor Hammer");
     const checkoutButton1 = await pageFixture.page.locator('[data-test="proceed-1"]');
     await checkoutButton1.click();
-    const proceedText = await pageFixture.page.getByText('Hello Jane Doe, you are already logged in. You can proceed to checkout.');
+    const proceedText = await pageFixture.page.getByText('Hello Jack Howe, you are already logged in. You can proceed to checkout.');
     await expect(proceedText).toBeVisible();
     const checkoutButton2 = await pageFixture.page.locator('[data-test="proceed-2"]'); 
     await checkoutButton2.click();
@@ -39,26 +40,31 @@ When('the user selects the payment method {string} and installment plan {string}
     await paymentMethodInput.selectOption({label: paymentMethod});
     const installmentPlanInput = await pageFixture.page.locator('[data-test="monthly_installments"]');
     await installmentPlanInput.selectOption({label: installmentPlan});
-    const paymentFinishButton = await pageFixture.page.locator('[data-test="finish"]');
+    const paymentFinishButton = pageFixture.page.locator('[data-test="finish"]');
     await paymentFinishButton.click();
 });
 
 Then('the user should get a message {string}', async(paymentSuccessMessage) => {
     const successMessage = await pageFixture.page.locator('.help-block');
-    await console.log("Invoice Number: ", await successMessage.textContent());
     await expect(successMessage).toHaveText(paymentSuccessMessage);
 });
-
+/*
 When('the user clicks confirm button', async() => {
-    const paymentFinishButton = await pageFixture.page.locator('[data-test="finish"]');
-    await paymentFinishButton.click({timeout: 60000});
-    await paymentFinishButton.click({timeout: 60000});
+   // await pageFixture.page.waitForTimeout(3000);
+    //const paymentFinishButton = await pageFixture.page.locator('[data-test="finish"]');
+    //await expect(paymentFinishButton).toBeVisible();
+   // await paymentFinishButton.waitFor();
+   const paymentFinishButton = pageFixture.page.locator('[data-test="finish"]');
+    await paymentFinishButton.click();
+    //await paymentFinishButton.click({timeout: 60000});
 });
 
 Then('the user should get a invoice number', async function(this: CustomWorld) {
     const invoiceNumber = await pageFixture.page.locator('[id="order-confirmation"] span');
-    await expect(invoiceNumber).toBeVisible();
+    await invoiceNumber.waitFor();
+    await expect(invoiceNumber).toBeVisible({timeout: 60000});
     console.log("Invoice Number: ", await invoiceNumber.textContent());
-    this.sharedData.invoiceNumber = await invoiceNumber.textContent();
-    console.log("Invoice Number: ", this.sharedData.invoiceNumber);
+    this.sharedData.invoiceNumber2 = await invoiceNumber.textContent();
+    console.log("Invoice Number2: ", this.sharedData.invoiceNumber2);
 });
+*/
