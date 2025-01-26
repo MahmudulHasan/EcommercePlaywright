@@ -48,7 +48,7 @@ Then('the user should get a message {string}', async(paymentSuccessMessage) => {
     const successMessage = await pageFixture.page.locator('.help-block');
     await expect(successMessage).toHaveText(paymentSuccessMessage);
 });
-/*
+
 When('the user clicks confirm button', async() => {
    // await pageFixture.page.waitForTimeout(3000);
     //const paymentFinishButton = await pageFixture.page.locator('[data-test="finish"]');
@@ -58,7 +58,7 @@ When('the user clicks confirm button', async() => {
     await paymentFinishButton.click();
     //await paymentFinishButton.click({timeout: 60000});
 });
-
+/*
 Then('the user should get a invoice number', async function(this: CustomWorld) {
     const invoiceNumber = await pageFixture.page.locator('[id="order-confirmation"] span');
     await invoiceNumber.waitFor();
