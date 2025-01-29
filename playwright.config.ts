@@ -70,3 +70,6 @@ export default defineConfig({
   //   reuseExistingServer: !process.env.CI,
   // },
 });
+// Set environment variable
+ process.env.invoiceNumberShared = "Hello, Playwright!";
+

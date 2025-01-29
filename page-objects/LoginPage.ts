@@ -27,7 +27,7 @@ async validLogin(username:string,password:string)
      await this.password.fill(password);
      await this.signInbutton.click();
      await this.page.waitForLoadState('networkidle');
-     await expect(await this.pageTitle).toHaveText('My account');
+     await expect(await this.pageTitle).toHaveText('Sales over the years');
 }
 
 }
