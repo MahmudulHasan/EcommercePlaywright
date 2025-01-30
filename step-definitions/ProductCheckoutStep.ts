@@ -13,23 +13,29 @@ When('the user proceeds to checkout for the product {string}', async (productNam
     await pageFixture.page.reload({waitUntil:'load'});
     const checkoutButton1 = await pageFixture.page.locator('[data-test="proceed-1"]');
     await checkoutButton1.click();
-    const proceedText = await pageFixture.page.getByText('Hello John Doe, you are already logged in. You can proceed to checkout.');
+    const proceedText = await pageFixture.page.getByText('Hello Jane Doe, you are already logged in. You can proceed to checkout.');
     await expect(proceedText).toBeVisible();
     const checkoutButton2 = await pageFixture.page.locator('[data-test="proceed-2"]'); 
     await checkoutButton2.click();
 });
 
 When('the user enters the Billing Address {string}, {string}, {string}, {string}', async (address, city, country, postcode) => {
+    //await pageFixture.page.pause();
     const addressInput = await pageFixture.page.locator('[data-test="address"]');
-    await addressInput.fill(address);
+    await addressInput.clear();
+    await addressInput.pressSequentially(address,{delay:100});
     const cityInput = await pageFixture.page.locator('[data-test="city"]');
-    await cityInput.fill(city);
+    await cityInput.clear();
+    await cityInput.pressSequentially(city,{delay:100});
     const stateInput = await pageFixture.page.locator('[data-test="state"]');
-    await stateInput.fill(city);
+    await stateInput.clear();
+    await stateInput.pressSequentially(city,{delay:100});
     const countryInput = await pageFixture.page.locator('[data-test="country"]');
-    await countryInput.fill(country);
+    await countryInput.clear();
+    await countryInput.pressSequentially(country,{delay:100});
     const postcodeInput = await pageFixture.page.locator('[data-test="postcode"]');
-    await postcodeInput.fill(postcode);
+    await postcodeInput.clear();
+    await postcodeInput.pressSequentially(postcode,{delay:100});
     const proceedButton = await pageFixture.page.locator('[data-test="proceed-3"]');
     await proceedButton.click();
 });

@@ -1,7 +1,6 @@
-Feature: Purchase a product from Ecommerce Platform
+Feature: Add a new product in Ecommerce Platform
   Purchase a product from Ecommerce Platform
 
-  @regression  
   Scenario: Purchase a product
     Given the user logs in to Ecommerce application with "customer@practicesoftwaretesting.com" and "welcome01"
     And the user goes to the "Home" page
