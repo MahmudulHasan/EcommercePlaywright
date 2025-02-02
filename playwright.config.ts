@@ -72,4 +72,5 @@ export default defineConfig({
 });
 // Set environment variable
  process.env.invoiceNumberShared = "Hello, Playwright!";
+ process.env.productName = "Product";
 

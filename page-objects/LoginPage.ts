@@ -23,11 +23,16 @@ async goTo()
 
 async validLogin(username:string,password:string)
 {
-    await  this.userName.fill(username);
-     await this.password.fill(password);
-     await this.signInbutton.click();
-     await this.page.waitForLoadState('networkidle');
-     await expect(await this.pageTitle).toHaveText('My account');
+    await this.userName.fill(username);
+    await this.password.fill(password);
+    await this.signInbutton.click();
+    await this.page.waitForLoadState('networkidle');
+    if(username === "customer@practicesoftwaretesting.com" || username === "customer2@practicesoftwaretesting.com"){
+        await expect(await this.pageTitle).toHaveText('My account');
+    }else{
+        await expect(await this.pageTitle).toHaveText('Sales over the years');
+    }
+    
 }
 
 }
