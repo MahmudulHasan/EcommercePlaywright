@@ -1,6 +1,7 @@
 import { setDefaultTimeout, When } from '@cucumber/cucumber';
 import { pageFixture } from '../hooks/pageFixtures';
 import { expect } from 'playwright/test';
+import { getFormattedTimestamp} from '../utils/TimeStamp'
 setDefaultTimeout(60000);
 
 
@@ -14,11 +15,11 @@ When('the user goes to Products page', async () => {
 });
 
 When('the user creates a new product {string}', async(product)=>{
-    const timestamp = new Date().toISOString().replace(/[-T:.Z]/g, '');
+    const timestamp = getFormattedTimestamp();
     const addProductButton = pageFixture.page.locator('[data-test="product-add"]');
     await addProductButton.click();
     const productNameInput = pageFixture.page.locator('[data-test="name"]');
-    process.env.productName = product+timestamp;
+    process.env.productName = product+"_"+timestamp;
     await productNameInput.fill(process.env.productName);
     const productDescriptionInput = pageFixture.page.locator('[data-test="description"]');
     const productPriceInput = pageFixture.page.locator('[data-test="price"]');
