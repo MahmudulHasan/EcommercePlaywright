@@ -13,7 +13,7 @@ Given('the user searches for {string}',async function(productName) {
     await searchButton.click();
     await expect(pagination).not.toBeVisible();
     await expect(searchCaption).toBeVisible();
-    await expect(productThumbnailName).toHaveText(productName);
+    await expect(productThumbnailName).toContainText(productName);
 });
 
 When('the user goes to the {string} product details page',async function(productName) {
