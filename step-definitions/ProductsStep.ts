@@ -1,7 +1,7 @@
 import { setDefaultTimeout, When } from '@cucumber/cucumber';
 import { pageFixture } from '../hooks/pageFixtures';
 import { expect } from 'playwright/test';
-import { getFormattedTimestamp} from '../utils/TimeStamp'
+import { getFormattedTimestamp } from '../utils/TimeStamp'
 setDefaultTimeout(60000);
 
 

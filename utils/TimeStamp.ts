@@ -5,6 +5,5 @@ export function getFormattedTimestamp(): string {
     const year = now.getFullYear(); // 2025
     const hours = String(now.getHours()).padStart(2, '0'); // 00-23
     const minutes = String(now.getMinutes()).padStart(2, '0'); // 00-59
-
     return `${day}-${month}-${year}_${hours}:${minutes}`;
 }

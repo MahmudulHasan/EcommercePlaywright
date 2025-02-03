@@ -1,4 +1,4 @@
-import { BeforeAll, AfterAll, Before, After, setDefaultTimeout } from "@cucumber/cucumber";
+import { BeforeAll, AfterAll, Before, After } from "@cucumber/cucumber";
 import { chromium, Browser, BrowserContext } from "playwright";
 import { pageFixture } from "./pageFixtures";
 

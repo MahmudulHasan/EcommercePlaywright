@@ -1,5 +1,5 @@
-Feature: Add a new product in Ecommerce Platform
-  Purchase a product from Ecommerce Platform
+Feature: Add a new product in Ecommerce Platform then delete it
+  Add a new product in Ecommerce Platform then delete it 
   
   @addproduct
   Scenario: Purchase a product
@@ -7,13 +7,9 @@ Feature: Add a new product in Ecommerce Platform
     When the user goes to Products page
     And the user creates a new product "Product"
     And the user goes to the "Home" page
-    #And the user searches for "Product"
     When the user goes to Products page
     And the user searches for Product in Products page
     And the user deletes the product
-    #And the user goes to the "Home" page
-    #And the user searches for "Product"
-    #Then the product should not be available
 
 
 
