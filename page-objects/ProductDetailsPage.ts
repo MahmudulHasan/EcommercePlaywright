@@ -1,16 +1,39 @@
-import { expect } from '@playwright/test';
-import { pageFixture } from '../hooks/pageFixtures';
+import { expect, Locator, Page } from "@playwright/test";
 
-const addToCartButton = pageFixture.page.locator("[data-test='add-to-cart']");
-const alert = await pageFixture.page.locator("[role='alert']");
-const cartCount = await pageFixture.page.locator('[data-test="cart-quantity"]');
+export class ProductDetailsPage {
+    page: Page;
+    addToCartButton: Locator;
+    alert: Locator;
+    cartCount: Locator;
 
-export async function addToCart(): Promise<void> {
-    await addToCartButton.click();
-    await expect(alert).toBeVisible();
+    constructor(page: Page) {
+        this.page = page;
+        this.addToCartButton = this.page.locator("[data-test='add-to-cart']");
+        this.alert = this.page.locator("[role='alert']");
+        this.cartCount = this.page.locator('[data-test="cart-quantity"]');
+    }
+
+    /** Clicks the "Add to Cart" button and verifies alert visibility */
+    async addToCart(): Promise<void> {
+        try {
+            await this.addToCartButton.waitFor(); // Ensure button is visible before clicking
+            await this.addToCartButton.click();
+            await expect(this.alert).toBeVisible();
+        } catch (error) {
+            console.error("Error adding product to cart", error);
+            throw error;
+        }
+    }
+
+    /** Checks if the cart count updates correctly */
+    async checkCartCount(expectedCount: string = "1"): Promise<void> {
+        try {
+            await expect(this.alert).not.toBeVisible({ timeout: 10000 });
+            await expect(this.cartCount).toHaveText(expectedCount);
+        } catch (error) {
+            console.error("Error verifying cart count", error);
+            throw error;
+        }
+    }
 }
-
-export async function checkCartCount(): Promise<void> {
-    await expect(alert).not.toBeVisible({timeout:10000});
-    await expect(cartCount).toHaveText('1');
-}
+module.exports = {ProductDetailsPage};
