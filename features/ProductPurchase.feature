@@ -1,7 +1,7 @@
 Feature: Purchase a product from Ecommerce Platform
   Purchase a product from Ecommerce Platform
+ 
 
-  @regression  
   Scenario: Purchase a product
     Given the user logs in to Ecommerce application with "customer2@practicesoftwaretesting.com" and "welcome01"
     And the user goes to the "Home" page
