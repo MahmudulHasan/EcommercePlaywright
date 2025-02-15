@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { pageFixture } from '../hooks/pageFixtures';
 
 export class ProductCheckoutPage {
     private page: Page;
@@ -16,7 +17,7 @@ export class ProductCheckoutPage {
     private paymentMethodInput: Locator;
     private paymentFinishButton: Locator;
     private successMessage: Locator;
-    private invoiceNumber: Locator;
+    private invoiceNumberLocator: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -34,10 +35,10 @@ export class ProductCheckoutPage {
         this.paymentMethodInput = page.locator('[data-test="payment-method"]');
         this.paymentFinishButton = page.locator('[data-test="finish"]');
         this.successMessage = page.locator('.help-block');
-        this.invoiceNumber = page.locator('[id="order-confirmation"] span');
+        this.invoiceNumberLocator = page.locator('[id="order-confirmation"] span');
     }
 
-    async proceedToCheckout(productName: string) {
+    async proceedToCheckout(productName: string): Promise<void> {
         await this.cartButton.click();
         await expect(this.cartItem).toHaveText(productName);
         await this.page.reload({ waitUntil: 'load' });
@@ -46,7 +47,7 @@ export class ProductCheckoutPage {
         await this.checkoutButton2.click();
     }
 
-    async enterBillingAddress(address: string, city: string, country: string, postcode: string) {
+    async enterBillingAddress(address: string, city: string, country: string, postcode: string): Promise<void> {
         await this.addressInput.clear();
         await this.addressInput.pressSequentially(address, { delay: 100 });
         await this.cityInput.clear();
@@ -60,26 +61,25 @@ export class ProductCheckoutPage {
         await this.proceedButton.click();
     }
 
-    async selectPaymentMethod(paymentMethod: string) {
+    async selectPaymentMethod(paymentMethod: string): Promise<void> {
         await this.paymentMethodInput.selectOption({ label: paymentMethod });
         await this.paymentFinishButton.click();
     }
 
-    async verifySuccessMessage(expectedMessage: string) {
+    async verifySuccessMessage(expectedMessage: string): Promise<void> {
         await expect(this.successMessage).toHaveText(expectedMessage);
     }
 
-    async confirmOrder() {
+    async confirmOrder(): Promise<void> {
         await this.paymentFinishButton.click();
     }
 
-    async getInvoiceNumber() {
-        await this.invoiceNumber.waitFor();
-        await expect(this.invoiceNumber).toBeVisible({ timeout: 60000 });
-        const invoiceText = await this.invoiceNumber.textContent();
-        process.env.invoiceNumberShared = invoiceText || '';
+    async getInvoiceNumber(invoiceNumber:string): Promise<void> {
+        await this.invoiceNumberLocator.waitFor();
+        await expect(this.invoiceNumberLocator).toBeVisible({ timeout: 60000 });
+        const invoiceText = await this.invoiceNumberLocator.textContent();
+        invoiceNumber = invoiceText ?? '';
         console.log("Invoice Number: ", invoiceText);
-        return invoiceText;
     }
 }
-module.exports = {ProductCheckoutPage};
+module.exports = { ProductCheckoutPage };

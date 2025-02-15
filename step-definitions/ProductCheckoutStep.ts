@@ -30,7 +30,7 @@ When('the user clicks confirm button', async () => {
     await productCheckoutPage.confirmOrder();
 });
 
-Then('the user should get an invoice number', async function () {
+Then('the user should get a invoice number', async function () {
     const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-    await productCheckoutPage.getInvoiceNumber();
+    await productCheckoutPage.getInvoiceNumber(pageFixture.invoiceNumber);
 });

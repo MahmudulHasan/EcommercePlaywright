@@ -11,5 +11,5 @@ When('the user goes to {string} page', (menuItemName:string) => {
 
 Then('the user should see the invoice number in the list', () => {
     const invoicePage = new InvoicePage(pageFixture.page);
-    invoicePage.checkInvoiceNumber();
+    invoicePage.checkInvoiceNumber(pageFixture.invoiceNumber);
 });

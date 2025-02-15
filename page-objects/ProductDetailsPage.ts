@@ -13,27 +13,15 @@ export class ProductDetailsPage {
         this.cartCount = this.page.locator('[data-test="cart-quantity"]');
     }
 
-    /** Clicks the "Add to Cart" button and verifies alert visibility */
     async addToCart(): Promise<void> {
-        try {
-            await this.addToCartButton.waitFor(); // Ensure button is visible before clicking
-            await this.addToCartButton.click();
-            await expect(this.alert).toBeVisible();
-        } catch (error) {
-            console.error("Error adding product to cart", error);
-            throw error;
-        }
+        await this.addToCartButton.waitFor();
+        await this.addToCartButton.click();
+        await expect(this.alert).toBeVisible();
     }
 
-    /** Checks if the cart count updates correctly */
     async checkCartCount(expectedCount: string = "1"): Promise<void> {
-        try {
-            await expect(this.alert).not.toBeVisible({ timeout: 10000 });
-            await expect(this.cartCount).toHaveText(expectedCount);
-        } catch (error) {
-            console.error("Error verifying cart count", error);
-            throw error;
-        }
+        await expect(this.alert).not.toBeVisible({ timeout: 10000 });
+        await expect(this.cartCount).toHaveText(expectedCount);
     }
 }
-module.exports = {ProductDetailsPage};
+module.exports = { ProductDetailsPage };

@@ -82,4 +82,4 @@ export class ProductsPage {
         await expect(this.deleteMessage).toContainText('Product deleted.');
     }
 }
-module.exports = {ProductsPage};
+module.exports = { ProductsPage };
