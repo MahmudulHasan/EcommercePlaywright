@@ -48,7 +48,6 @@ export class ProductsPage {
         await this.invoicePageLocator.click();
     }
 
-    /** Creates a new product with a given name */
     async createProduct(product: string): Promise<void> {
         await this.addProductButton.click();
         await this.productNameInput.fill(product);
@@ -69,14 +68,12 @@ export class ProductsPage {
         await expect(this.alert).toBeVisible();
     }
 
-    /** Searches for the created product */
     async searchProduct(productName: string): Promise<void> {
         await this.productSearchBox.pressSequentially(productName, { delay: 300 });
         await this.productSearchButton.click();
         await expect(this.productNameLocator).toHaveText(productName);
     }
 
-    /** Deletes the product */
     async deleteProduct(): Promise<void> {
         await this.deleteButton.click();
         await expect(this.deleteMessage).toContainText('Product deleted.');

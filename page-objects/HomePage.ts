@@ -19,7 +19,6 @@ export class HomePage {
         this.addToCartButton = this.page.locator("[data-test='add-to-cart']");
     }
 
-    /** Search for a product and verify results */
     async searchProduct(productName: string): Promise<void> {
             await this.searchBox.fill(productName);
             await this.searchButton.click();
@@ -28,7 +27,6 @@ export class HomePage {
             await expect(this.productThumbnailName).toContainText(productName);
     }
 
-    /** Open the product details page and verify the Add to Cart button is visible */
     async openProductDetailsPage(productName: string): Promise<void> {
             const productNameLocator = this.page.getByText(productName).nth(1);
             await productNameLocator.click();
