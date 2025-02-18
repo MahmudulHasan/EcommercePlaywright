@@ -22,15 +22,20 @@ export class HomePage {
     async searchProduct(productName: string): Promise<void> {
             await this.searchBox.fill(productName);
             await this.searchButton.click();
-            await expect(this.pagination).not.toBeVisible();
+            await this.page.waitForTimeout(3000);
             await expect(this.searchCaption).toBeVisible();
+            await expect(this.pagination).not.toBeVisible();
             await expect(this.productThumbnailName).toContainText(productName);
     }
 
     async openProductDetailsPage(productName: string): Promise<void> {
             const productNameLocator = this.page.getByText(productName).nth(1);
             await productNameLocator.click();
-            await expect(this.addToCartButton).toBeVisible();
+            await this.addToCartButton.waitFor();
+            //await expect(this.addToCartButton).toBeVisible();
+            await this.addToCartButton.click();
+            //await expect(this.page.locator("[role='alert']")).toBeVisible();
+            //await expect(this.page.locator("[role='alert']")).not.toBeVisible({ timeout: 10000 });
         }
 }
 

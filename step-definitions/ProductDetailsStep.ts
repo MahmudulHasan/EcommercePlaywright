@@ -6,10 +6,10 @@ setDefaultTimeout(60000);
 
 When('the user adds the product to the cart', () => {
     const productDetailsPage = new ProductDetailsPage(pageFixture.page);
-    productDetailsPage.addToCart();
+   // productDetailsPage.addToCart();
 });
 
-Then('the product should be added to the cart', async () => {
+Then('the product should be added to the cart', ()=> {
     const productDetailsPage = new ProductDetailsPage(pageFixture.page);
     productDetailsPage.checkCartCount()
 });

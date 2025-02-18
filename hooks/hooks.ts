@@ -16,10 +16,14 @@ Before(async function() {
 });
 
 After(async function() {
-    await pageFixture.page.close();
-    await context.close();
+    if (pageFixture.page) {
+        await pageFixture.page.close();
+    }
+    if (browser) {
+        await browser.close();
+    }
 });
 
-AfterAll(async function() {
-    await browser.close();
-});
+//AfterAll(async function() {
+    
+//});
