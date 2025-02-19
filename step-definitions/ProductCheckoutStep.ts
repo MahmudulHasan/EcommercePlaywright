@@ -4,33 +4,33 @@ import { ProductCheckoutPage } from '../page-objects/ProductCheckoutPage';
 
 setDefaultTimeout(60000);
 
-When('the user proceeds to checkout for the product {string}', async (productName) => {
+When('the user proceeds to checkout for the product {string}', (productName) => {
     const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-    await productCheckoutPage.proceedToCheckout(productName);
+     productCheckoutPage.proceedToCheckout(productName);
 });
 
 When('the user enters the Billing Address {string}, {string}, {string}, {string}', 
-    async (address, city, country, postcode) => {
+     (address, city, country, postcode) => {
         const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-        await productCheckoutPage.enterBillingAddress(address, city, country, postcode);
+        productCheckoutPage.enterBillingAddress(address, city, country, postcode);
 });
 
-When('the user selects the payment method {string}', async (paymentMethod) => {
+When('the user selects the payment method {string}', (paymentMethod) => {
     const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-    await productCheckoutPage.selectPaymentMethod(paymentMethod);
+    productCheckoutPage.selectPaymentMethod(paymentMethod);
 });
 
-Then('the user should get a message {string}', async (paymentSuccessMessage) => {
+Then('the user should get a message {string}', (paymentSuccessMessage) => {
     const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-    await productCheckoutPage.verifySuccessMessage(paymentSuccessMessage);
+    productCheckoutPage.verifySuccessMessage(paymentSuccessMessage);
 });
 
-When('the user clicks confirm button', async () => {
+When('the user clicks confirm button',  () => {
     const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-    await productCheckoutPage.confirmOrder();
+    productCheckoutPage.confirmOrder();
 });
 
-Then('the user should get a invoice number', async function () {
+Then('the user should get a invoice number', () => {
     const productCheckoutPage = new ProductCheckoutPage(pageFixture.page);
-    await productCheckoutPage.getInvoiceNumber(pageFixture.invoiceNumber);
+     productCheckoutPage.getInvoiceNumber(pageFixture.invoiceNumber);
 });
