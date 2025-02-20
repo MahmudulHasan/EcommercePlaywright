@@ -74,7 +74,7 @@ export class ProductCheckoutPage {
         await this.paymentFinishButton.click();
     }
 
-    async getInvoiceNumber(invoiceNumber:string): Promise<void> {
+    async getInvoiceNumber(invoiceNumber: string): Promise<void> {
         await this.invoiceNumberLocator.waitFor();
         await expect(this.invoiceNumberLocator).toBeVisible({ timeout: 60000 });
         const invoiceText = await this.invoiceNumberLocator.textContent();
