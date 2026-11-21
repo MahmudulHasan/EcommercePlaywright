@@ -1,23 +1,28 @@
-Feature: Purchase a product from Ecommerce Platform
-  Purchase a product from Ecommerce Platform
- 
-  @regression
-  Scenario: Purchase a product
-    Given the user logs in to Ecommerce application with "customer2@practicesoftwaretesting.com" and "welcome01"
-    And the user goes to the "Home" page
-    And the user searches for "Court Hammer"
-    When the user goes to the "Court Hammer" product details page
-    And the user adds the product to the cart
-    Then the product should be added to the cart
-    When the user proceeds to checkout for the product "Court Hammer"
-    And the user enters the Billing Address "Mirpur", "Dhaka", "Bangladesh", "1216"
-    And the user selects the payment method "Cash on Delivery"
-    Then the user should get a message "Payment was successful"
-    When the user clicks confirm button
-    Then the user should get a invoice number
-    When the user goes to "Invoices" page
-    Then the user should see the invoice number in the list
+@regression
+Feature: Purchase a product
+  A signed-in customer can find a product, buy it and see the invoice.
 
-
-
-
+  Scenario: Buy a product with cash on delivery
+    Given I am logged in as "customer2"
+    When I go to the home page
+    And I search for "Court Hammer"
+    Then I should see only the product "Court Hammer"
+    When I open the product "Court Hammer"
+    And I add the product to the cart
+    Then the cart should show 1 item
+    When I open the cart
+    Then the cart should contain "Court Hammer"
+    When I proceed to checkout as the logged in user
+    And I enter the billing address:
+      | street      | Mirpur 10  |
+      | house number | 12         |
+      | city        | Dhaka      |
+      | state       | Dhaka      |
+      | country     | Bangladesh |
+      | postal code | 1216       |
+    And I pay with "Cash on Delivery"
+    Then I should see the message "Payment was successful"
+    When I confirm the order
+    Then I should receive an invoice number
+    When I open "My invoices" from the user menu
+    Then the invoice should be listed in my invoices

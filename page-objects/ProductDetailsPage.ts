@@ -1,32 +1,36 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ProductDetailsPage {
-    page: Page;
-    addToCartButton: Locator;
-    alert: Locator;
-    cartCount: Locator;
+  readonly productName: Locator;
+  readonly addToCartButton: Locator;
+  readonly toast: Locator;
+  readonly unitPrice: Locator;
+  readonly quantity: Locator;
 
-    constructor(page: Page) {
-        this.page = page;
-        this.addToCartButton = this.page.locator("[data-test='add-to-cart']");
-        this.alert = this.page.locator("[role='alert']");
-        this.cartCount = this.page.locator('[data-test="cart-quantity"]');
-    }
+  constructor(page: Page) {
+    this.productName = page.getByTestId('product-name');
+    this.addToCartButton = page.getByTestId('add-to-cart');
+    this.toast = page.getByRole('alert');
+    this.unitPrice = page.getByTestId('unit-price');
+    this.quantity = page.getByTestId('quantity');
+  }
 
-    async addToCart(): Promise<void> {
-        await this.page.waitForLoadState('domcontentloaded');
-        await this.page.locator("[data-test='add-to-cart']").click();
-        await this.page.waitForSelector(
-            "[role='alert']",
-            { state: "visible" }
-        );
-        await this.alert.waitFor();
-        await expect(this.alert).toBeVisible();
-    }
+  async expectProduct(name: string): Promise<void> {
+    await expect(this.productName).toHaveText(name);
+  }
 
-    async checkCartCount(): Promise<void> {
-        await expect(this.alert).not.toBeVisible({ timeout: 10000 });
-        await expect(this.cartCount).toHaveText("1");
-    }
+  async readUnitPrice(): Promise<number> {
+    await expect(this.unitPrice).toHaveText(/\d/);
+    return Number(await this.unitPrice.innerText());
+  }
+
+  async setQuantity(quantity: number): Promise<void> {
+    await this.quantity.fill(String(quantity));
+    await expect(this.quantity).toHaveValue(String(quantity));
+  }
+
+  async addToCart(): Promise<void> {
+    await this.addToCartButton.click();
+    await expect(this.toast.filter({ hasText: 'Product added to shopping cart' })).toBeVisible();
+  }
 }
-module.exports = { ProductDetailsPage };

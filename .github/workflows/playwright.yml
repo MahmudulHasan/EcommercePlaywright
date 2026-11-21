@@ -1,0 +1,84 @@
+name: E2E tests
+
+# Manual runs only. Automatic triggers are switched off because Cloudflare on
+# practicesoftwaretesting.com blocks GitHub-hosted runners with a bot check, so
+# every test fails there. To turn them back on (e.g. after pointing BASE_URL at a
+# self-hosted copy of the shop), add triggers such as:
+#   push:
+#     branches: [main]
+#   pull_request:
+#   schedule:
+#     - cron: '0 2 * * *'
+on:
+  workflow_dispatch:
+    inputs:
+      browsers:
+        description: Browsers to run
+        type: choice
+        options: [chromium, all]
+        default: chromium
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Typecheck & lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+
+  e2e:
+    name: E2E (${{ matrix.browser }})
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        # "all" adds Firefox; the default is Chromium only.
+        browser: ${{ fromJSON(inputs.browsers == 'all' && '["chromium","firefox"]' || '["chromium"]') }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run tests
+        run: npx bddgen && npx playwright test --project=${{ matrix.browser }}
+        env:
+          # Optional overrides; the public demo defaults are used when these secrets are not set.
+          BASE_URL: ${{ vars.BASE_URL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+      - name: Upload HTML report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload traces and videos of failures
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.browser }}
+          path: test-results/
+          retention-days: 7
