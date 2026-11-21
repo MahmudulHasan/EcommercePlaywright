@@ -11,10 +11,10 @@ End-to-end BDD tests for the [Practice Software Testing](https://practicesoftwar
 - Gherkin `.feature` files with typed step definitions that use Playwright fixtures.
 - Page Object Model with `getByTestId` / `getByRole` locators and web-first assertions.
 - Parallel runs, retries on CI, and HTML report with screenshots, videos and traces of failures.
-- Cross-browser projects: Chromium, Firefox, WebKit.
+- Cross-browser projects: Chromium and Firefox.
 - Self-cleaning: products created by tests are removed through the API, even when a test fails.
 - Type checking and ESLint (`typescript-eslint` + `eslint-plugin-playwright`), so a missing `await` fails the build.
-- GitHub Actions: Chromium on every push and PR, all browsers nightly or on demand.
+- GitHub Actions: Chromium on every push and PR, Chromium and Firefox nightly or on demand.
 
 ## Getting started
 Requires Node.js 20 or newer.
@@ -23,7 +23,7 @@ Requires Node.js 20 or newer.
 git clone https://github.com/MahmudulHasan/EcommercePlaywright.git
 cd EcommercePlaywright
 npm ci
-npx playwright install --with-deps chromium   # or without a name for all browsers
+npx playwright install --with-deps chromium   # add firefox for cross-browser runs
 ```
 
 ## Running tests
@@ -32,7 +32,7 @@ npx playwright install --with-deps chromium   # or without a name for all browse
 | `npm test` | All scenarios on Chromium |
 | `npm run test:smoke` | `@smoke` scenarios (login) |
 | `npm run test:regression` | `@regression` scenarios (purchase, admin products) |
-| `npm run test:all-browsers` | Every scenario on Chromium, Firefox and WebKit |
+| `npm run test:all-browsers` | Every scenario on Chromium and Firefox |
 | `npm run test:headed` | Chromium with a visible browser |
 | `npm run test:ui` | Playwright UI mode |
 | `npm run report` | Open the last HTML report |
@@ -58,7 +58,6 @@ Everything works with no setup, using the site's public demo accounts. To overri
 ## Notes
 - The suite runs against a shared public demo site. Regression scenarios place real (demo) orders and create and delete products, so CI keeps parallelism low.
 - The site's product search does not handle multi-word queries well, so the admin scenario searches by a unique single word.
-- WebKit needs an up-to-date OS. On macOS 14 and older, Playwright installs a frozen WebKit build that recent Playwright versions can't drive ("Unknown setting" protocol errors). Use Chromium/Firefox locally there; WebKit runs fine in CI on Ubuntu.
 
 ## Contributing
 Contributions are welcome. Run `npm run check` and `npm test` before opening a pull request.

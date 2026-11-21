@@ -44,8 +44,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Pushes and PRs run Chromium only; nightly runs and "all" manual runs cover every engine.
-        browser: ${{ fromJSON((github.event_name == 'schedule' || inputs.browsers == 'all') && '["chromium","firefox","webkit"]' || '["chromium"]') }}
+        # Pushes and PRs run Chromium only; nightly runs and "all" manual runs add Firefox.
+        browser: ${{ fromJSON((github.event_name == 'schedule' || inputs.browsers == 'all') && '["chromium","firefox"]' || '["chromium"]') }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

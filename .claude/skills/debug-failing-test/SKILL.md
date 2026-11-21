@@ -8,7 +8,7 @@ description: Run this repo's Playwright BDD suite and diagnose failing or flaky 
 ## Run
 - `npm test` – all scenarios on Chromium (runs `bddgen` first).
 - `npm run test:smoke` / `npm run test:regression` – by tag.
-- `npm run test:all-browsers` – Chromium, Firefox, WebKit (install browsers with `npx playwright install --with-deps`).
+- `npm run test:all-browsers` – Chromium and Firefox (install with `npx playwright install --with-deps chromium firefox`).
 - One scenario: `npx bddgen && npx playwright test --project=chromium --grep "<scenario name>"`.
 - Watch it: `npm run test:headed` or `npm run test:ui`.
 
