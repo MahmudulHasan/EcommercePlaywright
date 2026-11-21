@@ -29,8 +29,8 @@ npx playwright install --with-deps chromium   # add firefox for cross-browser ru
 | Command | What it does |
 | --- | --- |
 | `npm test` | All scenarios on Chromium |
-| `npm run test:smoke` | `@smoke` scenarios (login) |
-| `npm run test:regression` | `@regression` scenarios (purchase, admin products) |
+| `npm run test:smoke` | `@smoke` scenarios (login, validation, catalogue, contact form) |
+| `npm run test:regression` | `@regression` scenarios (purchase, cart, admin products) |
 | `npm run test:all-browsers` | Every scenario on Chromium and Firefox |
 | `npm run test:headed` | Chromium with a visible browser |
 | `npm run test:ui` | Playwright UI mode |

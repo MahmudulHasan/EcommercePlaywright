@@ -11,9 +11,10 @@ Then('I should see only the product {string}', async ({ homePage }, name: string
   await homePage.expectOnlyProduct(name);
 });
 
-When('I open the product {string}', async ({ homePage, productDetailsPage }, name: string) => {
+When('I open the product {string}', async ({ homePage, productDetailsPage, state }, name: string) => {
   await homePage.openProduct(name);
   await productDetailsPage.expectProduct(name);
+  state.unitPrice = await productDetailsPage.readUnitPrice();
 });
 
 When('I add the product to the cart', async ({ productDetailsPage }) => {

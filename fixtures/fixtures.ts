@@ -1,6 +1,8 @@
 import { test as base, createBdd } from 'playwright-bdd';
 import { AdminProductsPage } from '../page-objects/AdminProductsPage';
+import { CartPage } from '../page-objects/CartPage';
 import { CheckoutPage } from '../page-objects/CheckoutPage';
+import { ContactPage } from '../page-objects/ContactPage';
 import { HomePage } from '../page-objects/HomePage';
 import { InvoicesPage } from '../page-objects/InvoicesPage';
 import { LoginPage } from '../page-objects/LoginPage';
@@ -14,6 +16,8 @@ export interface ScenarioState {
   /** Unique single-word term that finds `productName` with the site's search. */
   productSearchTerm?: string;
   invoiceNumber?: string;
+  /** Unit price of the product opened last, read from its details page. */
+  unitPrice?: number;
 }
 
 interface Fixtures {
@@ -25,6 +29,8 @@ interface Fixtures {
   homePage: HomePage;
   productDetailsPage: ProductDetailsPage;
   checkoutPage: CheckoutPage;
+  cartPage: CartPage;
+  contactPage: ContactPage;
   invoicesPage: InvoicesPage;
   adminProductsPage: AdminProductsPage;
 }
@@ -65,6 +71,8 @@ export const test = base.extend<Fixtures>({
   homePage: async ({ page }, use) => use(new HomePage(page)),
   productDetailsPage: async ({ page }, use) => use(new ProductDetailsPage(page)),
   checkoutPage: async ({ page }, use) => use(new CheckoutPage(page)),
+  cartPage: async ({ page }, use) => use(new CartPage(page)),
+  contactPage: async ({ page }, use) => use(new ContactPage(page)),
   invoicesPage: async ({ page }, use) => use(new InvoicesPage(page)),
   adminProductsPage: async ({ page }, use) => use(new AdminProductsPage(page)),
 });
