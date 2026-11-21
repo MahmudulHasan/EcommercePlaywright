@@ -10,3 +10,4 @@ cucumber_report.html
 .env.*
 !.env.example
 .DS_Store
+/ci-results/

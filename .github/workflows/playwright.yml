@@ -1,12 +1,15 @@
 name: E2E tests
 
+# Manual runs only. Automatic triggers are switched off because Cloudflare on
+# practicesoftwaretesting.com blocks GitHub-hosted runners with a bot check, so
+# every test fails there. To turn them back on (e.g. after pointing BASE_URL at a
+# self-hosted copy of the shop), add triggers such as:
+#   push:
+#     branches: [main]
+#   pull_request:
+#   schedule:
+#     - cron: '0 2 * * *'
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-  schedule:
-    # Nightly cross-browser run, 02:00 UTC
-    - cron: '0 2 * * *'
   workflow_dispatch:
     inputs:
       browsers:
@@ -44,8 +47,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Pushes and PRs run Chromium only; nightly runs and "all" manual runs add Firefox.
-        browser: ${{ fromJSON((github.event_name == 'schedule' || inputs.browsers == 'all') && '["chromium","firefox"]' || '["chromium"]') }}
+        # "all" adds Firefox; the default is Chromium only.
+        browser: ${{ fromJSON(inputs.browsers == 'all' && '["chromium","firefox"]' || '["chromium"]') }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5

@@ -1,6 +1,5 @@
 # EcommercePlaywright
 
-[![E2E tests](https://github.com/MahmudulHasan/EcommercePlaywright/actions/workflows/playwright.yml/badge.svg)](https://github.com/MahmudulHasan/EcommercePlaywright/actions/workflows/playwright.yml)
 ![Playwright](https://img.shields.io/badge/Playwright-E2E%20Testing-green?style=flat&logo=playwright)
 ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=flat&logo=typescript)
 ![Gherkin](https://img.shields.io/badge/Gherkin-BDD-brightgreen?style=flat&logo=cucumber)
@@ -14,7 +13,7 @@ End-to-end BDD tests for the [Practice Software Testing](https://practicesoftwar
 - Cross-browser projects: Chromium and Firefox.
 - Self-cleaning: products created by tests are removed through the API, even when a test fails.
 - Type checking and ESLint (`typescript-eslint` + `eslint-plugin-playwright`), so a missing `await` fails the build.
-- GitHub Actions: Chromium on every push and PR, Chromium and Firefox nightly or on demand.
+- GitHub Actions workflow (manual runs only, see Notes).
 
 ## Getting started
 Requires Node.js 20 or newer.
@@ -48,7 +47,7 @@ page-objects/    One class per page or component
 fixtures/        Playwright fixtures: page objects, per-scenario state, test-data cleanup
 test-data/       Test users (overridable through environment variables)
 .claude/skills/  Claude Code skills for writing and debugging scenarios
-.github/workflows/playwright.yml   CI pipeline
+.github/workflows/playwright.yml   CI pipeline (manual trigger)
 playwright.config.ts               Browsers, base URL, timeouts, reporters
 ```
 
@@ -57,6 +56,7 @@ Everything works with no setup, using the site's public demo accounts. To overri
 
 ## Notes
 - The suite runs against a shared public demo site. Regression scenarios place real (demo) orders and create and delete products, so CI keeps parallelism low.
+- CI runs only when started by hand (Actions → E2E tests → Run workflow). Cloudflare on practicesoftwaretesting.com shows a bot check to GitHub-hosted runners, so every test fails there. Re-enable the automatic triggers in `.github/workflows/playwright.yml` once CI targets a self-hosted copy of the shop (it's [open source](https://github.com/testsmith-io/practice-software-testing)) or runs on a self-hosted runner.
 - The site's product search does not handle multi-word queries well, so the admin scenario searches by a unique single word.
 
 ## Contributing
