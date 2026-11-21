@@ -1,0 +1,12 @@
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/.features-gen/
+/dist/
+cucumber_report.html
+.env
+.env.*
+!.env.example
+.DS_Store

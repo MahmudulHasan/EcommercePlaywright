@@ -1,5 +1,13 @@
-Feature: Login into Ecommerce Platform
-  Login test for Ecommerce Platform
+@smoke
+Feature: Login
+  Registered users can sign in and land on the page for their role.
 
-  Scenario: Login with valid credentials
-    Given the user logs in to Ecommerce application with "customer@practicesoftwaretesting.com" and "welcome01"
+  Scenario Outline: Sign in as <role>
+    When I log in as "<role>"
+    Then I should land on the "<role>" dashboard
+
+    Examples:
+      | role      |
+      | customer  |
+      | customer2 |
+      | admin     |

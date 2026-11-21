@@ -1,37 +1,30 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { expect, type Locator, type Page } from '@playwright/test';
+import type { TestUser } from '../test-data/users';
 
 export class LoginPage {
-    signInbutton: Locator;
-    userName: Locator;
-    password: Locator;
-    pageTitle: Locator;
-    page: Page;
+  readonly email: Locator;
+  readonly password: Locator;
+  readonly submit: Locator;
+  readonly pageTitle: Locator;
 
-    constructor(page: Page) {
-        this.page = page;
-        this.signInbutton = this.page.locator("[data-test='login-submit']");
-        this.userName = this.page.locator("[data-test='email']");
-        this.password = this.page.locator("[data-test='password']");
-        this.pageTitle = this.page.locator("[data-test='page-title']");
-    }
+  constructor(private readonly page: Page) {
+    this.email = page.getByTestId('email');
+    this.password = page.getByTestId('password');
+    this.submit = page.getByTestId('login-submit');
+    this.pageTitle = page.getByTestId('page-title');
+  }
 
-    async goTo() {
-        await this.page.goto("https://practicesoftwaretesting.com/auth/login");
-    }
+  async goto(): Promise<void> {
+    await this.page.goto('/auth/login');
+  }
 
-    async validLogin(username: string, password: string) {
-        await this.userName.fill(username);
-        await this.password.fill(password);
-        await this.signInbutton.click();
-        await this.page.waitForLoadState('networkidle');
-        if (username === "customer@practicesoftwaretesting.com" || username === "customer2@practicesoftwaretesting.com") {
-            await expect(await this.pageTitle).toHaveText('My account');
-        } else {
-            await expect(await this.pageTitle).toHaveText('Sales over the years');
-        }
+  async login(user: TestUser): Promise<void> {
+    await this.email.fill(user.email);
+    await this.password.fill(user.password);
+    await this.submit.click();
+  }
 
-    }
-
+  async expectLoggedIn(user: TestUser): Promise<void> {
+    await expect(this.pageTitle).toHaveText(user.landingPageTitle);
+  }
 }
-module.exports = { LoginPage };
-

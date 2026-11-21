@@ -1,14 +1,11 @@
-Feature: Add a new product in Ecommerce Platform then delete it
-  Add a new product in Ecommerce Platform then delete it 
-  
-  Scenario: Purchase a product
-    Given the user logs in to Ecommerce application with "admin@practicesoftwaretesting.com" and "welcome01"
-    When the user goes to Products page
-    And the user creates a new product "Product"
-    And the user goes to the "Home" page
-    When the user goes to Products page
-    And the user searches for Product in Products page
-    And the user deletes the product
+@regression @admin
+Feature: Manage products as an admin
+  An admin can add a product to the catalogue and remove it again.
 
-
-
+  Scenario: Create a product and then delete it
+    Given I am logged in as "admin"
+    When I open "Products" from the user menu
+    And I create a product named "PW Test Product"
+    And I open "Products" from the user menu
+    And I search the admin product list for the new product
+    And I delete the new product
